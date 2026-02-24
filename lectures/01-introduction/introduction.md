@@ -167,7 +167,7 @@ key limitations that led to multi‑core processors:
   - massive production, faster development
   - cheaper systems, step-by-step upgrade
   - become most popular in nineties
-  - each core capable of approx. 10-20 GFLOPS/s
+  - each core is capable of 10-20 GFLOPS/s
   - [VEGA](https://en-vegadocs.vega.izum.si/architecture/)
 - modern parallel computers
   - standard computer in institutes: DEC VAX 11/780, 1 MFLOPS
