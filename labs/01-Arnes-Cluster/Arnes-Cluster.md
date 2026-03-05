@@ -46,14 +46,13 @@ A guide for working on the cluster and using the middleware [SLURM](https://slur
 You can also run jobs using a bash script in which you specify job requirements. Example script:
 ```Bash
 #!/bin/bash
-#SBATCH --job-name=my_job_name
-#SBATCH --partition=all
 #SBATCH --reservation=fri
-#SBATCH --ntasks=4
-#SBATCH --nodes=1
-#SBATCH --mem-per-cpu=100MB
-#SBATCH --output=my_job.out
+#SBATCH --partition=all
+#SBATCH --job-name=my_first_job
+#SBATCH --ntasks=2
 #SBATCH --time=00:01:00
+#SBATCH --mem-per-cpu=100MB
+#SBATCH --output=job-output.log
 
 srun hostname
 ```
