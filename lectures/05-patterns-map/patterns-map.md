@@ -57,7 +57,7 @@
 
   - statistics of $shots$ and $hits# - $shots$ inside the circular quadrant
   - ration $hits/shots$ is proportional to $\pi/4$
-  - slow convergence, relative error is proportional to $1/\square{shots}$
+  - slow convergence, relative error is proportional to $1/\sqrt{shots}$
   - a basic unit of work that can be parallelized is one shot
     - a lot of overhead
     - better is to combine several shots to one task

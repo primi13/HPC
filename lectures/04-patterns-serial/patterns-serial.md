@@ -114,4 +114,4 @@
         - more expensive due to the memory hardware subsystem
       - implicitly sharing the data structure can lead to scalability problems
         - better is to maintain a separate memory pool for each worker and avoid global locks
-        - gGet rid of false sharing
+        - get rid of false sharing
