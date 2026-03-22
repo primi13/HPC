@@ -75,7 +75,7 @@
 
 - example: Dining Philosophers Problem (Dijsktra)
 
-  <img src="figures/philosophers.png" alt="Dining philosophers problem">
+  <img src="figures/philosophers.png" alt="Dining philosophers problem" width="50%">
 
   - five philosophers, plates of spaghetti and five forks
   - philosophers have a discussion: they think and talk, become hungry, eat, think and talk, ...
