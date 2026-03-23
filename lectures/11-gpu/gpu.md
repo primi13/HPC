@@ -1,1 +1,1 @@
-# Vector Units
+# Graphics Processing Units

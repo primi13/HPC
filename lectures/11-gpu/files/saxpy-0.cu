@@ -11,8 +11,7 @@
 
 
 #define VECTOR_SIZE 1024
-//#define VECTOR_SIZE 2048
-
+// #define VECTOR_SIZE 2048
 
 __global__ void saxpy(float a, float *x, float *y) {
     int tid = threadIdx.x;
@@ -42,7 +41,7 @@ int main(void) {
     checkCudaErrors(cudaMemcpy(d_y, h_y, VECTOR_SIZE * sizeof(float), cudaMemcpyHostToDevice));
 
     // Compute on device
-    saxpy<<<2, VECTOR_SIZE>>>(a, d_x, d_y);
+    saxpy<<<1, VECTOR_SIZE>>>(a, d_x, d_y);
     checkCudaErrors(cudaGetLastError());
 
     // Transfer data: device --> host

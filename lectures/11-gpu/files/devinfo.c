@@ -10,21 +10,18 @@
 #include "cuda_runtime.h"
 #include "helper_cuda.h"
 
-int main(int argc, char **argv) 
-{
+int main(int argc, char **argv) {
     
     // Get number of GPUs
     int deviceCount = 0;
     cudaError_t error = cudaGetDeviceCount(&deviceCount);
-    if (error != cudaSuccess) 
-    {
+    if (error != cudaSuccess) {
         printf("cudaGetDeviceCount error %d\n-> %s\n", error, cudaGetErrorString(error));
         exit(EXIT_FAILURE);
     }
 
     // Get propreties of each device
-    for (int dev = 0; dev < deviceCount; dev++) 
-    {
+    for (int dev = 0; dev < deviceCount; dev++) {
 
         struct cudaDeviceProp prop;
         int value;

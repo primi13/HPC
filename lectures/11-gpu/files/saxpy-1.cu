@@ -13,9 +13,7 @@
 #define VECTOR_SIZE 2048
 #define BLOCK_SIZE 256
 
-
-__global__ void saxpy(float a, float *x, float *y)
-{
+__global__ void saxpy(float a, float *x, float *y) {
     int tid = blockDim.x * blockIdx.x + threadIdx.x;
     y[tid] = a * x[tid] + y[tid];
 }
