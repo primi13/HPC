@@ -61,7 +61,7 @@
 - How is the heat distributed inside the surface?
 - Laplace equation
 
-  $\frac{\partial^2 T(x,y)}{\partial x^2} = 0$
+  $\frac{\partial^2 T(x,y)}{\partial x^2} + \frac{\partial^2 T(x,y)}{\partial y^2} = 0$
   
 - discretized Laplace equation is in proper form for iterative solving
 
