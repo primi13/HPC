@@ -33,16 +33,16 @@
 - multidimensional stencils
 - strip-mining (optimized for cache)
 - example
-  - Two-dimensional array organized in row-by-row fashion
-  - Horizontal data in the same cache line, vertical far away
-  - Horizontal split
-    - Whole line does not fit cache, a lot of cache misses when accessing adjacent rows
-  - Vertical split
-    - Processors redundantly read the same cache line
-  - Strips (vertical)
-    - Each processor gets its strip of width equal to a multiple of cache line size
-    - Processing goes sequentially from top to bottom to maximize cache reuse
-    - Multiple of cache line size prevents false sharing between adjacent strips on output
+  - two-dimensional array organized in row-by-row fashion
+  - horizontal data in the same cache line, vertical far away
+  - horizontal split
+    - whole line does not fit cache, a lot of cache misses when accessing adjacent rows
+  - vertical split
+    - processors redundantly read the same cache line
+  - strips (vertical)
+    - each processor gets its strip of width equal to a multiple of cache line size
+    - processing goes sequentially from top to bottom to maximize cache reuse
+    - multiple of cache line size prevents false sharing between adjacent strips on output
 
 ### Communication
 
@@ -61,11 +61,11 @@
 - How is the heat distributed inside the surface?
 - Laplace equation
 
-  $$ \frac{\partial^2 T(x,y)}{\partial x^2} = 0 $$
+  $ \frac{\partial^2 T(x,y)}{\partial x^2} = 0 $
   
 - discretized Laplace equation is in proper form for iterative solving
 
-  $$ T(x, y) = 0.25 (T(x-h, y) + T(x+h, y) + T(x, y-h) + T(x, y+h)) $$
+  $ T(x, y) = \frac{1}{4} (T(x-h, y) + T(x+h, y) + T(x, y-h) + T(x, y+h)) $
 
 - surface size $N+2$ includes boundary values on the edges
 - result
