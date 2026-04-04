@@ -47,7 +47,7 @@
     - processing goes sequentially from top to bottom to maximize cache reuse
     - multiple of cache line size prevents false sharing between adjacent strips on output
 
-      <img src="figures/stencil-2D.png" alt="2D stencil - vertical strips" width="50%" />
+      <img src="figures/stencil-2D.png" alt="2D stencil - vertical strips" width="40%" />
 
 ### Communication
 
@@ -76,7 +76,7 @@
 
 - surface size ```N+2``` includes boundary values, tiles of size ```BLOCK_SIZE+2``` include halo
 
-  <img src="figures/heat-GPU.png" alt="Heat surface arrangement" width="50%" />
+  <img src="figures/heat-GPU.png" alt="Heat surface arrangement" width="40%" />
 
 - result
 
