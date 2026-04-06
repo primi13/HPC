@@ -80,3 +80,100 @@
   - [mm1.cu](files/mm1.cu): tiled approach
   - [mm2.cu](files/mm2.cu): tiled approach with improper indexing of threads
 
+## Matrix Multiplication in Deep Models
+
+### Neural Networks
+
+- general-purpose mathematical models
+- a lot of free parameters
+- different learning algorithms
+- libraries
+  - building blocks
+  - modelling, learning, inference
+
+  <img src="figures/PyTorch.png" alt="PyTorch" width="50%" />
+
+  Source: [medium.com](https://medium.com/analytics-vidhya/not-torturing-in-learning-pytorch-b2f7f169923a)
+
+- multilayered perceptron
+
+  - fully connected model
+  - inference at one layer
+    - input values are multiplied by the synaptic weights
+    - a sum of values on all synapses
+    - activation function gives output
+
+    <img src="figures/MLP.png" alt="Multilayered perceptron" width="65%" />
+
+  - mathematical formulation:
+    - product of the input vector (matrix) and the weight matrix gives the output vector (matrix)
+
+    <img src="figures/MLP-matrices.png" alt="Multilayered perceptron in matrix notation" width="65%" />
+
+- convolution neural network
+  - YOLO-v4 tiny backbone
+  - image processing
+  - many convolution layers
+  - inference
+
+    <img src="figures/CNN.png" alt="Convolution neural network" width="90%" />
+
+  - mathematical formulation at one layer
+    - convolution of filters and image
+    - tensors
+    - by unfolding filter and image  data in a proper way, convolution becomes matrix multiplication
+
+    <img src="figures/CNN-matrices.png" alt="Convolution neural network in matrix notation" width="90%" />
+
+- neural network training
+  - presenting the neural network with a set of pairs (inputs, correct outputs)
+    - inference + weight adaptation
+    - weight adaptation follows gradient descent algorithms
+    - gradients can also be calculated using matrix operation
+    - model error decreases
+  - large language models use similar ideas
+  - for fast computation, we must try keeping model parameters (and data) in graphics accelerators' memory
+
+### Tensor Cores: Matrix Operations in Hardware
+
+- FMA operation
+  - fused multiply and add, $d = c + a\times b$
+  - multiplier
+  - output from the multiplier goes to the adder input
+  - an accumulator to store intermediate result
+  - one operation in each clock cycle
+
+    <img src="figures/FMA.png" alt="Fused multiplay and add" width="50%" />
+
+- FMA and matrices
+  - general matrix multiplication unit or a GEMM unit, $\mathbf{D} = \mathbf{C} + \mathbf{A} \times \mathbf{B}$
+
+    <img src="figures/tensor-core.png" alt="Tensor core" width="90%" />
+
+  - we can do $4\times 4$ or more matrix multiplications in one clock cycle
+    - multipliers and adders are decision circuits
+    - we can combine them into a GEMM unit for one element of a $4\times 4$ matrix
+
+    <img src="figures/FMA-combined.png" alt="Fused multiplay and add for a matrix element" width="50%" />
+
+    - combining 16 such units gives us a circuit with $64 = 16 \times 4$ multipliers, capable of GEMM operation in one clock cycle!
+  - benefit: transferring fewer operands compared to the same number of scalar products with a vector unit
+  - commercial names: TPU, tensor core, neural processing unit, neural engine, matrix core
+
+### Precision: how low can we go
+
+- neural networks are resilient on errors in computation
+- can use less precise number representations
+- benefits of using shorter number representations
+  - smaller FNA circuits
+  - transfer of more operands from memory
+  - computation on more operands at the same time
+- floating-point number formats
+  - double precision: FP64
+  - single precision: FP32
+  - tensor float: TF32
+  - half-precision: FP16, BF16
+  - quarter precision: FP8
+  - FP6, FP4
+
+<img src="figures/FP-formats.png" alt="Floating point formats in modern GPUs" width="75%" />
