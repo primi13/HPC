@@ -123,7 +123,7 @@
     - tensors
     - by unfolding filter and image  data in a proper way, convolution becomes matrix multiplication
 
-    <img src="figures/CNN-matrices.png" alt="Convolution neural network in matrix notation" width="90%" />
+    <img src="figures/CNN-matrices.jpg" alt="Convolution neural network in matrix notation" width="90%" />
 
 - neural network training
   - presenting the neural network with a set of pairs (inputs, correct outputs)
@@ -143,18 +143,18 @@
   - an accumulator to store intermediate result
   - one operation in each clock cycle
 
-    <img src="figures/FMA.png" alt="Fused multiplay and add" width="50%" />
+    <img src="figures/FMA.png" alt="Fused multiplay and add" width="35%" />
 
 - FMA and matrices
   - general matrix multiplication unit or a GEMM unit, $\mathbf{D} = \mathbf{C} + \mathbf{A} \times \mathbf{B}$
 
-    <img src="figures/tensor-core.png" alt="Tensor core" width="90%" />
+    <img src="figures/tensor-core.png" alt="Tensor core" width="75%" />
 
   - we can do $4\times 4$ or more matrix multiplications in one clock cycle
     - multipliers and adders are decision circuits
     - we can combine them into a GEMM unit for one element of a $4\times 4$ matrix
 
-    <img src="figures/FMA-combined.png" alt="Fused multiplay and add for a matrix element" width="50%" />
+    <img src="figures/FMA-combined.png" alt="Fused multiplay and add for a matrix element" width="40%" />
 
     - combining 16 such units gives us a circuit with $64 = 16 \times 4$ multipliers, capable of GEMM operation in one clock cycle!
   - benefit: transferring fewer operands compared to the same number of scalar products with a vector unit
