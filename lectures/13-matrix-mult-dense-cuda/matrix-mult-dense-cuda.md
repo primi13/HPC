@@ -4,7 +4,7 @@
 
 - two representations: row-major and column-major
 
-  <img src="figures/dense-matrix-representations.png" alt="Dense matrix representations" width="50%" />
+  <img src="figures/dense-matrix-representations.png" alt="Dense matrix representations" width="75%" />
 
 - number of matrix elements ```rows``` $\times$ ```cols```
 - 1D indexing
@@ -26,7 +26,7 @@
     free (m);
     ```
 
-    <img src="figures/dense-matrix-allocation.png" alt="Dense matrix allocation" width="50%" />
+    <img src="figures/dense-matrix-allocation.png" alt="Dense matrix allocation" width="75%" />
 
   - contiguous memory approach
     - allocate an array of matrix elements (```mData```)
