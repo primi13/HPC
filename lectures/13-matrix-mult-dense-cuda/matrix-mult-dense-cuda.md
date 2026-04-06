@@ -182,7 +182,7 @@
   - [mmhp.cu](files/mmhp.cu): tiled approach using half precision
   - [mmtc.cu](files/mmtc.cu): tiled approach using tensor cores
     - WMMA API (warp matrix multiply accumulate, a C++ library)
-    - Nvidia V100 supports tensor core multiplication of tiles $16\times\16$, $32\times 8$, $8\times 32$ with inner dimension (scalar product) of $16$ elements
+    - Nvidia V100 supports tensor core multiplication of tiles $16\times 16$, $32\times 8$, $8\times 32$ with inner dimension (dot product) of $16$ elements
     - in parallel we compute tiles of size $32\times 32$ in the resulting matrix
     - in the solution 1D block of 128 threads contains 4 warps, which we arrange in $2\times 2$ grid of $16\times 16$ subtiles
     - computation follows the same idea as before, a bit more complex with additional split to subtiles
