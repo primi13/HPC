@@ -1,5 +1,5 @@
-// nvcc -Xcompiler -fopenmp -o mm-0 mm-0.cu
-// srun --reservation=fri --partition=gpu --gpus=1 ./mm-0
+// nvcc -Xcompiler -fopenmp -o mm0 mm0.cu
+// srun --reservation=fri --partition=gpu --gpus=1 ./mm0
 // simple algorithm
 
 #include <stdio.h>
@@ -10,27 +10,28 @@
 #include "cuda.h"
 #include "helper_cuda.h"
 
-#define SIZE 				2048
-#define THREADS_PER_BLOCK	16
+
+#define SIZE 		2048
+#define BLOCK_SIZE	16
 
 
 // gpu kernel
-__global__ void matrixMultiply(float *A, float *B, float *C, int widthA, int heightA, int widthB, int heightB)						
-{														
-	int col = blockDim.x * blockIdx.x + threadIdx.x;
-	int row = blockDim.y * blockIdx.y + threadIdx.y;
+__global__ void matrixMultiply(float *A, float *B, float *C, int wA, int hA, int wB, int hB) {														
+	
+	int j = blockDim.x * blockIdx.x + threadIdx.x;
+	int i = blockDim.y * blockIdx.y + threadIdx.y;
 	
 	float sum = 0.0f;
-	for(int k=0; k<widthA; k++)
-		sum += A[row*widthA+k]*B[k*widthB+col];
+	for (int k = 0; k < wA; k++)
+		sum += A[wA*i+k]*B[wB*k+j];
 
-	C[row*widthB+col] = sum;
+	C[i*wB+j] = sum;
 }														
 
 
 // cpu main routine
-int main(int argc, char *argv[]) 
-{
+int main(int argc, char *argv[]) {
+	
 	int hA = SIZE;
 	int wA = SIZE;
 	int hB = wA;
@@ -72,10 +73,10 @@ int main(int argc, char *argv[])
     checkCudaErrors(cudaEventCreate(&start));
     checkCudaErrors(cudaEventCreate(&stop));
 
-	dim3 gridsize((hA-1)/THREADS_PER_BLOCK+1, (wB-1)/THREADS_PER_BLOCK+1);
-	dim3 blocksize(THREADS_PER_BLOCK, THREADS_PER_BLOCK);
+	dim3 gridSize((hA-1)/BLOCK_SIZE+1, (wB-1)/BLOCK_SIZE+1);
+	dim3 blockSize(BLOCK_SIZE, BLOCK_SIZE);
     checkCudaErrors(cudaEventRecord(start));
-    matrixMultiply<<<gridsize, blocksize>>>(d_A, d_B, d_C, hA, wA, hB, wB);
+    matrixMultiply<<<gridSize, blockSize>>>(d_A, d_B, d_C, hA, wA, hB, wB);
     checkCudaErrors(cudaGetLastError());
     checkCudaErrors(cudaEventRecord(stop));
     checkCudaErrors(cudaEventSynchronize(stop));
@@ -95,10 +96,11 @@ int main(int argc, char *argv[])
 
     // results host
 	double h_dt = omp_get_wtime();
-    for(int i=0; i<hA; i++)
-		for(int j=0; j<wB; j++)
-			for(int k=0; k<wA; k++)
-				h_C_cpu[i*wB+j] += h_A[i*wA+k] * h_B[k*wB+j];
+	if (argc > 1)
+		for(int i=0; i<hA; i++)
+			for(int j=0; j<wB; j++)
+				for(int k=0; k<wA; k++)
+					h_C_cpu[i*wB+j] += h_A[i*wA+k] * h_B[k*wB+j];
 	h_dt = omp_get_wtime() - h_dt;
 
 	printf("host: %lfs, device: %lfs (%lfs), speedup: %lf\n", h_dt, d_dt, d_dt_kernel, h_dt/d_dt);
