@@ -115,6 +115,7 @@
     - [pdb1HYS](files/data/pdb1HYS.mtx): 36k x 36k, 2.2M non-zero
     - [scircuit](files/data/scircuit.mtx): 171k x 171k, 96k non-zero
     - [dw8192](files/data), 8k x 8x, 41k non-zero
+  - improved code: [spmvCSRsp.cu](files/spmvCSRsp.cu) - more threads are working in the single row
 
 ### ELLPACK format (ELL)
 
@@ -166,11 +167,6 @@
 - parallel code
   - each thread operates on one row
   - code: [spmv.cu](files/spmv.cu)
-
-### GPU imporved CSR
-
-- more threads are working in the single row
-- code: [spmvCSRsp.cu](files/spmvCSRsp.cu)
 
 ### Hybrid solution (HYB)
 
