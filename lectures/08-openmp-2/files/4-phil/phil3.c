@@ -7,6 +7,8 @@
 	Each philosopher eats with two forks, he can only take forks of his neighbor
 
 	no deadlock by using test
+    acquire one, try second, release first if second is not available,
+    wait and try again
 
 	gcc -fopenmp phil3.c -o phil3
 	srun --reservation=fri --cpus-per-task=5 phil3

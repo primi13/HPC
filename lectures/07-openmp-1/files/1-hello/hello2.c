@@ -7,8 +7,8 @@
 int main() {
     #pragma omp parallel 
 	{
-		#pragma omp sections
-		// #pragma omp sections nowait 
+		// #pragma omp sections
+		#pragma omp sections nowait 
 		{
 			#pragma omp section 
 			{

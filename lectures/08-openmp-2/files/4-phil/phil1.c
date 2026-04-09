@@ -17,7 +17,7 @@
 #include <omp.h> 
 
 #define P 		5
-#define COURSES	50
+#define COURSES	2
 
 omp_lock_t mutex_forks[5];
 

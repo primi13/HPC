@@ -16,7 +16,7 @@
 #include <omp.h> 
 
 #define P 		5
-#define COURSES	50
+#define COURSES	3
 
 void discussion(void) {
 	int p;

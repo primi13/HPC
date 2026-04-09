@@ -7,8 +7,12 @@
 	Each philosopher eats with two forks, he can only take forks of his neighbor
 	
 	No deadlock, efficient solution, forks are taken in the order
-
-	gcc -fopenmp phil4.c -o phil4
+    For philosophers 0 to P-2, the order is left then right (p, (p+1)%P). 
+    For the last philosopher, the order is reversed. 
+    This asymmetric ordering is the deadlock-avoidance strategy: 
+    not everyone acquires forks in the same direction, so circular wait is broken.
+	
+    gcc -fopenmp phil4.c -o phil4
 	srun --reservation=fri --cpus-per-task=5 phil4
 */
 
