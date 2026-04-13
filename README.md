@@ -56,4 +56,4 @@
 - Week 08:
   - lectures:
     [Sparse Matrix-vector Multiplication](lectures/14-matrix-mult-sparse-cuda/matrix-mult-sparse-cuda.md)
-  -labs:
+  - labs:
