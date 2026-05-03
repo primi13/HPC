@@ -126,16 +126,16 @@
 - distributing $N$ elements to $S$ segments
   - larger-first approach
     - first $r= (n\mod S)$ segments have one element more, $\left\lceil N/S\right\rceil$
-    - other segments are of size $ \lfloor 𝑁/S \rfloor $
+    - other segments are of size $\lfloor 𝑁/S \rfloor$
     - index of the first element in segment $s$: $i_L = \lfloor N/S \rfloor s + \min(s, r)$
     - index of the last element in segment $s$: $i_H = \lfloor N/S \rfloor (s+1) + \min(s+1, r) - 1$
     - complex function to determine to which segment belongs element $i$:
-    $s = \min \left⁡( \left\lfloor i / (\lfloor N/S \rfloor + 1) \right\rfloor, \left\lfloor (i-r) / \lfloor N/S \rfloor \right\rfloor \right)$
+    $s = \min ⁡( \left\lfloor i / (\lfloor N/S \rfloor + 1) \right\rfloor, \left\lfloor (i-r) / \lfloor N/S \rfloor \right\rfloorß)$
   - mixed approach
     - larger and smaller segments are mixed
     - index of first element in segment $s$: $i_L = \lfloor s N / S \rfloor$
     - index of last element in segment $s$: $i_H = \lfloor (s+1) N / S \rfloor - 1$
-    - element $i$ belongs to segment $s = \left\lfloor (S(i+1)-1)/N \right]\rfloor$
+    - element $i$ belongs to segment $s = \left\lfloor (S(i+1)-1)/N \right\rfloor$
 
 ## xxx
 
