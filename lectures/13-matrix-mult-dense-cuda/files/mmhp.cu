@@ -1,4 +1,4 @@
-// nvcc -Xcompiler -fopenmp -arch=sm_70 -o mmh mmhp.cu
+// nvcc -Xcompiler -fopenmp -arch=sm_70 -o mmhp mmhp.cu
 // srun --reservation=fri --partition=gpu --gpus=1 ./mmhp 2048 <compare> <printout>
 // block multiplication algorithm -- warp assignment matches row-major matrix format
 // half precision version, CPU version is slow!!, avoid compare flag for large matrices
