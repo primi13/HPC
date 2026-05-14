@@ -1,0 +1,49 @@
+Bootstrap: docker
+From: python:3.10-bookworm
+
+%environment
+    # These variables are for when you RUN the container
+    export VIRTUAL_ENV=/opt/venv
+    export PATH="/opt/venv/bin:$PATH"
+    export PYPPETEER_EXECUTABLE_PATH=/usr/bin/chromium
+    export LC_ALL=C
+
+%post
+    # Tell apt-get to run quietly
+    export DEBIAN_FRONTEND=noninteractive
+
+    # 1. Install system tools
+    apt-get update && apt-get install -y --no-install-recommends \
+        curl \
+        ca-certificates \
+        pandoc \
+        chromium \
+        libnss3 \
+        libatk-bridge2.0-0 \
+        libxcomposite1 \
+        libxdamage1 \
+        libxrandr2 \
+        libgbm1 \
+        libasound2 \
+        libpangocairo-1.0-0 \
+        libgtk-3-0
+
+    # 2. Install Astral uv globally
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    mv /root/.local/bin/uv /usr/local/bin/
+    mv /root/.local/bin/uvx /usr/local/bin/
+
+    # 3. Create venv and install dependencies
+    # We set VIRTUAL_ENV here so uv pip install knows where to go
+    export VIRTUAL_ENV=/opt/venv
+    uv venv $VIRTUAL_ENV --python python3.10
+    
+    # Now uv will correctly target /opt/venv
+    uv pip install pyppeteer
+
+    # 4. Cleanup
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+%runscript
+    exec python3 "$@"

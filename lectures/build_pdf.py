@@ -27,11 +27,30 @@ def find_single_markdown_file(directory: Path) -> Path:
 
 
 async def html_to_pdf_pageless(html_file: Path, pdf_file: Path):
+    # --- CROSS-PLATFORM BROWSER LOGIC ---
+    # 1. Check if the environment variable from our .def file exists
+    # 2. Check the standard Linux path
+    # 3. Fallback to your Windows path
+    linux_path = "/usr/bin/chromium"
+    windows_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+    # Priority: Env Var > Linux Path > Windows Path
+    chrome_path = os.environ.get("PYPPETEER_EXECUTABLE_PATH")
+    if not chrome_path:
+        if os.path.exists(linux_path):
+            chrome_path = linux_path
+        else:
+            chrome_path = windows_path
+
+    print(f"Using browser at: {chrome_path}")
+
     browser = await launch(
         headless=True,
-        executablePath="C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",  # change if your Chrome path differs
-        args=["--no-sandbox"],
+        executablePath=chrome_path,
+        args=["--no-sandbox", "--disable-setuid-sandbox"],
     )
+    # ------------------------------------
+
     page = await browser.newPage()
     await page.goto(f"file://{html_file.resolve()}", {"waitUntil": "networkidle0"})
 
@@ -39,7 +58,7 @@ async def html_to_pdf_pageless(html_file: Path, pdf_file: Path):
     dimensions = await page.evaluate("""() => {
         return {
             width: document.documentElement.scrollWidth,
-            height: Math.ceil(document.documentElement.scrollHeight * 1.015),  // add some padding to avoid cutting off content,
+            height: Math.ceil(document.documentElement.scrollHeight * 1.015),
         }
     }""")
     print("Content dimensions:", dimensions)
@@ -66,11 +85,9 @@ def main():
         print("Argument must be an integer.")
         sys.exit(1)
 
-    # 1️⃣ Find target directory
     target_dir = find_target_directory(index)
     os.chdir(target_dir)
 
-    # 2️⃣ Find markdown file
     md_file = find_single_markdown_file(Path("."))
 
     base_name = md_file.stem
@@ -91,14 +108,15 @@ def main():
         check=True,
     )
 
-    # 4️⃣ Convert HTML -> pageless PDF using headless Chrome
+    # 4️⃣ Convert HTML -> pageless PDF
     asyncio.get_event_loop().run_until_complete(
         html_to_pdf_pageless(temp_html, output_pdf)
     )
     print("Pageless PDF successfully generated:", output_pdf)
 
     # 5️⃣ Cleanup
-    temp_html.unlink()
+    if temp_html.exists():
+        temp_html.unlink()
 
 
 if __name__ == "__main__":
