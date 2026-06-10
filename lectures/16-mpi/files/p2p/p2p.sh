@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=p2p1
+#SBATCH --job-name=p2p5
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=2
 #SBATCH --cpus-per-task=1
@@ -12,6 +12,4 @@
 
 module load OpenMPI
 
-mpirun --display-allocation --n 2 $SLURM_JOB_NAME 4000
-mpirun --display-allocation --n 2 $SLURM_JOB_NAME 4001
-
+mpirun --display-allocation --n 2 --mca pml ob1 $SLURM_JOB_NAME

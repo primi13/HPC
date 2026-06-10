@@ -4,7 +4,7 @@
 // module load OpenMPI
 // mpicc -o p2p2 p2p2.c
 // salloc --reservation=fri --nodes=1 --ntasks-per-node=2 --cpus-per-task=1
-// mpirun --display-allocation --n 2 p2p-2 
+// mpirun --display-allocation --n 2 p2p2 
 
 #include <stdlib.h>
 #include <stdio.h>

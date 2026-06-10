@@ -53,16 +53,16 @@ int main(int argc, char *argv[]) {
 
     // exchange data
     MPI_Sendrecv(&M[1][1], 1, rowtype, (myid+1)%2, 0, 
-                 &M[0][1], 1, rowtype, (myid+1)%2, MPI_ANY_TAG,
-                 MPI_COMM_WORLD, MPI_STATUS_IGNORE);
-    MPI_Sendrecv(&M[N][1], 1, rowtype, (myid+1)%2, 0, 
                  &M[N+1][1], 1, rowtype, (myid+1)%2, MPI_ANY_TAG,
                  MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Sendrecv(&M[N][1], 1, rowtype, (myid+1)%2, 0, 
+                 &M[0][1], 1, rowtype, (myid+1)%2, MPI_ANY_TAG,
+                 MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Sendrecv(&M[1][1], 1, coltype, (myid+1)%2, 0, 
-                 &M[1][0], 1, coltype, (myid+1)%2, MPI_ANY_TAG,
+                 &M[1][N+1], 1, coltype, (myid+1)%2, MPI_ANY_TAG,
                  MPI_COMM_WORLD, MPI_STATUS_IGNORE);
     MPI_Sendrecv(&M[1][N], 1, coltype, (myid+1)%2, 0, 
-                 &M[1][N+1], 1, coltype, (myid+1)%2, MPI_ANY_TAG,
+                 &M[1][0], 1, coltype, (myid+1)%2, MPI_ANY_TAG,
                  MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 
     // print matrices
